@@ -440,7 +440,8 @@ sub create {
 sub ValidateGroupName {
   my ($name, @users) = (@_);
   my $dbh   = Bugzilla->dbh;
-  my $query = "SELECT id FROM groups " . "WHERE name = ?";
+  my $quoted_groups = $dbh->quote_identifier('groups');
+  my $query = "SELECT id FROM $quoted_groups " . "WHERE name = ?";
   if (Bugzilla->params->{'usevisibilitygroups'}) {
     my @visible = (-1);
     foreach my $user (@users) {

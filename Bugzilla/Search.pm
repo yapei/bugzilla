@@ -2579,7 +2579,8 @@ sub _long_desc_nonchanged {
   # If the user is not part of the insiders group, they cannot see
   # private comments
   if (!$self->_user->is_insider) {
-    $join_args->{term} .= " AND $table.isprivate = 0";
+    $join_args->{term} .= ($join_args->{term} ? " AND " : "")
+                          . "$table.isprivate = 0";
   }
 
   my $join = {table => 'longdescs', as => $table, extra => [$join_args->{term}],};
